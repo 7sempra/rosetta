@@ -3,6 +3,7 @@
 Rosetta is a CSS *pre-* preprocessor that allows you to share variables between your Javascript code and a CSS preprocessor such as [Stylus](http://learnboost.github.com/stylus/), [Sass](http://sass-lang.com/), or [LESS](http://lesscss.org/).
 
 It works like this:
+
 1. You define your shared variables in one or more `.rose` files.
 2. Rosetta compiles your `.rose` files into a Javascript module and one or more Stylus/Sass/LESS files.
 
