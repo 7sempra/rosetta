@@ -1,0 +1,6 @@
+var rosetta;
+(function() {
+<%= preamble %>
+
+rosetta = <%= blob %>;
+})();

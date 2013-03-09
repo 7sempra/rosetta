@@ -1,0 +1,94 @@
+#!/usr/bin/env node
+
+var rosetta = require('../'),
+    fs = require('fs'),
+    path = require('path'),
+    nopt = require('nopt'),
+    glob = require('glob'),
+    _  = require('underscore');
+
+var knownOpts = {
+  'jsFormat': String,
+  'cssFormat': String,
+  'jsOut': path,
+  'cssOut': path,
+  'jsTemplate': String,
+  'cssTemplate': String,
+  'version': Boolean,
+  'help': Boolean
+};
+
+var shortHands = {
+  'v': ['--version'],
+  'h': ['--help']
+};
+
+var jsFormats = {'commonjs': true, 'requirejs': true, 'flat': true};
+var cssFormats = {'stylus': true, 'sass': true, 'scss': true, 'less': true};
+
+var opts = nopt(knownOpts, shortHands, process.argv, 2);
+
+if (process.argv.length < 3 || opts.help) {
+  printUsage();
+  return;
+}
+
+if (opts.version) {
+  return process.stdout.write('v' + require('../package.json').version + '\n');
+}
+
+var requiredOpts = ['jsOut', 'cssOut'];
+for (var a = 0; a < requiredOpts.length; a++) {
+  if (!opts[requiredOpts[a]]) {
+    die('Missing required parameter: --' + requiredOpts[a]);
+  }
+}
+
+if (opts.jsFormat && !jsFormats[opts.jsFormat]) {
+  die('Unrecognized JS format: ' + opts.jsFormat);
+}
+
+if (opts.cssFormat && !cssFormats[opts.cssFormat]) {
+  die('Unrecognized CSS format: ' + opts.cssFormat);
+}
+
+var globs = opts.argv.remain;
+if (globs.length < 1) {
+  die('You must specify at least one source file');
+}
+
+var sources = {};
+for (var a = 0; a < globs.length; a++) {
+  var paths = glob.sync(globs[a]);
+  for (var b = 0; b < paths.length; b++) {
+    sources[paths[b]] = true;
+  }
+}
+
+rosetta.compile(_.keys(sources), opts, function(err, files) {
+  if (err) {
+    console.log(err); // TODO: what to do here
+  } else {
+    rosetta.writeFiles(files, function(err) {
+      if (err) {
+        throw err;  // TODO: what to do here
+      }
+      console.log('Done!');
+    });
+  }
+});
+
+function printUsage() {
+  fs.createReadStream(__dirname + '/usage.txt')
+    .pipe(process.stdout)
+    .on('close', function () { process.exit(1) });
+}
+
+function message(str) {
+  process.stdout.write(str + '\n');
+}
+
+function die(str) {
+  message(str);
+  process.exit(1);
+}

@@ -1,0 +1,3 @@
+<%= preamble %>
+
+module.exports = <%= blob %>;

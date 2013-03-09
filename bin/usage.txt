@@ -1,0 +1,43 @@
+
+Usage: rosetta {OPTIONS} [files]
+
+Example:
+rosetta --jsout "lib/css.js" --cssout "stylus/{{ns}}.styl" rosetta/**/*.rose
+
+Options:
+
+  --jsOut          Write the JS module to this file.
+
+  --cssOut         Write the CSS to this file. If the path contains the string
+                   '{{ns}}', then a file will be created for every namespace in
+                   your .rose files, replacing the {{ns}} with the name of each
+                   of your namspaces.
+
+  --jsFormat       The desired output format for the JS module. Supports
+                   'commonjs', 'requirejs', and 'flat'. Default: 'commonjs'.
+
+  --cssFormat      Desired output format for the CSS file(s). Should be one of
+                   'stylus', 'sass', 'scss', or 'less'. Default: 'stylus'.
+
+  --jsTemplate     A custom template that defines how the Javascript should be
+                   formatted. This should be in the format of an Underscore.js
+                   template, and must specify slots for variables named
+                   'preamble' and 'blob'. For example:
+                   $'<%= preamble %>\n var x = <%= blob %>;'
+                   (the leading $ is required if you want bash to understand \n)
+
+  --cssTemplate    A custom template that defines how a single CSS variable
+                   should be formatted. This should be a string in the form of
+                   an Underscore.js template, and must specify slots for
+                   variables named 'k' (the name of the variable) and 'v' (the
+                   value of the variable). For example:
+                   '$<%= k %>: <%= v %>;''
+
+  --version, -v    Print the current version to stdout.
+
+  --help, -h       Show this message.
+
+[files] can be a list of any number of files. Glob syntax is supported,
+e.g. 'rosetta/**/*.rose' will resolve to all files that are contained in the
+'rosetta' directory (or any of its subdirectories) and that end with '.rose'.
+
