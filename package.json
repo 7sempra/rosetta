@@ -7,12 +7,35 @@
     "email": "net7runner@gmail.com"
   },
   "main": "lib/rosetta.js",
+  "bin" : {
+    "rosetta" : "./bin/rosetta"
+  },
+  "homepage": "https://github.com/7sempra/rosetta",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/7sempra/rosetta.git"
+  },
+  "bugs": {
+    "url" : "https://github.com/7sempra/rosetta/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://github.com/7sempra/rosetta/blob/master/LICENSE-MIT"
+    }
+  ],
   "dependencies": {
     "classdef": "~1.0.1",
     "nopt": "~2.1.1",
     "glob": "~3.1.21",
     "underscore": "~1.4.4",
     "mkdirp": "~0.3.5"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.0",
+    "grunt-contrib-jshint": "~0.2.0",
+    "grunt-contrib-nodeunit": "~0.1.2",
+    "grunt-contrib-watch": "~0.3.1"
   },
   "keywords": [
     "css",
@@ -22,5 +45,5 @@
     "stylus",
     "sass",
     "less"
-  ]
+  ],
 }
