@@ -1,6 +1,6 @@
 {
   "name": "rosetta",
-  "version": "0.1.0a",
+  "version": "0.1.0",
   "description": "Shared variables between CSS and Javascript.",
   "author": {
     "name": "Ned Burns",
@@ -45,6 +45,7 @@
     "variables",
     "stylus",
     "sass",
-    "less"
+    "less",
+    "gruntplugin"
   ]
 }
