@@ -1,14 +1,14 @@
 {
   "name": "rosetta",
-  "version": "0.1.0",
+  "version": "0.1.0a",
   "description": "Shared variables between CSS and Javascript.",
   "author": {
     "name": "Ned Burns",
     "email": "net7runner@gmail.com"
   },
   "main": "lib/rosetta.js",
-  "bin" : {
-    "rosetta" : "./bin/rosetta"
+  "bin": {
+    "rosetta": "./bin/rosetta"
   },
   "homepage": "https://github.com/7sempra/rosetta",
   "repository": {
@@ -16,7 +16,7 @@
     "url": "https://github.com/7sempra/rosetta.git"
   },
   "bugs": {
-    "url" : "https://github.com/7sempra/rosetta/issues"
+    "url": "https://github.com/7sempra/rosetta/issues"
   },
   "licenses": [
     {
@@ -35,7 +35,8 @@
     "grunt": "~0.4.0",
     "grunt-contrib-jshint": "~0.2.0",
     "grunt-contrib-nodeunit": "~0.1.2",
-    "grunt-contrib-watch": "~0.3.1"
+    "grunt-contrib-watch": "~0.3.1",
+    "grunt-contrib-clean": "~0.4.0"
   },
   "keywords": [
     "css",
@@ -45,5 +46,5 @@
     "stylus",
     "sass",
     "less"
-  ],
+  ]
 }

@@ -24,12 +24,31 @@ module.exports = function(grunt) {
         files: ['<%= jshint.all %>'],
         tasks: 'jshint'
       }
+    },
+
+    clean: {
+      tmp: ['tmp']
+    },
+
+    rosetta: {
+      testBasic: {
+        src: ['test/basic.rose'],
+        jsOut: ['tmp/rosetta.js'],
+        cssOut: ['tmp/css/{{ns}}.styl'],
+        options: {
+          jsFormat: 'requirejs',
+          cssFormat: 'less'
+        }
+      },
     }
   });
+
+  grunt.loadTasks('tasks');
 
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-clean');
 
   grunt.registerTask('default', ['jshint nodeunit']);
 

@@ -92,9 +92,10 @@ colors:
     $warn = #F0F
     $error = #F00
 
+// You can 'add' to a namespace after the fact like this.
+// This can even occur in a separate .rose file
 colors.somethingElse:
-  $yesThatWorksToo = #43F2BA
-  $soDoAbsoluteReferences = colors.prompts.$error
+  $foo = colors.prompts.$error  // fully-qualified references!
 ```
 
 Rosetta can either dump each namespace to its own CSS file or concat them into a single large file.
@@ -102,7 +103,7 @@ Rosetta can either dump each namespace to its own CSS file or concat them into a
 ## Accessing Rosetta variables
 
 ### Javascript
-Rosetta creates a JS object who structure reflects your namespace structure. Given a Rosetta file like this:
+Rosetta creates a JS object whose structure reflects your namespace structure. Given a Rosetta file like this:
 ```
 $numShapes = 5
 animationDurations:
@@ -124,10 +125,10 @@ Every Rosetta variable the following properties:
 
 Some types have additional properties:
 
-*number*
-* `unit` - The unit associated with the number, e.g. `px` or `%`. Can be null.
+#### number
+* `unit` - The unit associated with the number, e.g. `px` or `%`. `null` if no unit specified.
 
-*color*
+#### color
 * `r` - Red (0-255)
 * `g` - Green (0-255)
 * `b` - Blue (0-255)
