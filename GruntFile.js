@@ -33,11 +33,11 @@ module.exports = function(grunt) {
     rosetta: {
       testBasic: {
         src: ['test/basic.rose'],
-        jsOut: ['tmp/rosetta.js'],
-        cssOut: ['tmp/css/{{ns}}.styl'],
         options: {
           jsFormat: 'requirejs',
-          cssFormat: 'less'
+          cssFormat: 'less',
+          jsOut: 'tmp/rosetta.js',
+          cssOut: 'tmp/css/{{ns}}.less',
         }
       },
     }

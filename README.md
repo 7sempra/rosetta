@@ -36,21 +36,16 @@ console.log('Thumbnail size is:', rosetta.thumbnailSize.val);
 
 ## How to install
 
-You can use Rosetta via the command-line, as a Javascript library, or as a Grunt plugin.
+You can use Rosetta via the command-line, as a [Grunt](http://gruntjs.com) plugin, or as a Javascript library.
 
-To install for the command-line:
+To install for use on the command-line:
 ```
 $ sudo npm install -g rosetta
 ```
 
-To install as a Javascript library:
+To install for Grunt or as a JS library:
 ```
 $ npm install rosetta
-```
-
-To install for Grunt:
-```
-$ npm install grunt-rosetta
 ```
 
 See [How to run Rosetta](#howToRun) for instructions on how to invoke the compiler.
@@ -76,7 +71,7 @@ $css = top left, center center
 Variables can reference other variables and be combined using arithmetic expressions:
 ```
 $foo = 35px
-$bar = $foo / 5         // bar is 7px
+$bar = $foo + 5 // bar is 40px
 $baz = foo * (bar - 45)
 ```
 
@@ -112,6 +107,7 @@ animationDurations:
 ```
 ...the vars can be accessed like this:
 ```js
+// in this example, we're using the CommonJS output format
 var rosetta = require('./rosetta');
 ...
 rosetta.numShapes.val;    // 5
@@ -119,11 +115,11 @@ rosetta.animationDurations.dialogAppear.val;    // 400
 rosetta.animationDurations.dialogAppear.unit;   // 'ms'
 ```
 
-Every Rosetta variable the following properties:
+Every Rosetta variable has the following properties:
 * `val` - The 'value' part of the variable. For numbers this means just the number part (e.g. `400` from `400px`). For colors, it will be a 24-bit number (e.g. 0xAC2B39). For URLs, it will be the URL itself. Strings and raw CSS are both just strings.
-* `type` - One of `number`, `color`, `string`, `url`, `css`
+* `type` - One of `number`, `color`, `string`, `url`, or `css`.
 
-Some types have additional properties:
+Some datatypes have additional properties:
 
 #### number
 * `unit` - The unit associated with the number, e.g. `px` or `%`. `null` if no unit specified.
@@ -197,7 +193,39 @@ e.g. 'rosetta/**/*.rose' will resolve to all files that are contained in the
 'rosetta' directory (or any of its subdirectories) and that end with '.rose'.
 ```
 
-Note: Normally, rosetta will dump your CSS to a single file. However, if your `cssOut` path contains the string `{{ns}}`, then it will instead dump each namespace to its own file, replacing `{{ns}}` with the namespace's name. This allows you to `@include` these files individually, which can be nice if you have a lot of them.
+Note: Normally, rosetta will dump your CSS to a single file. However, if your `cssOut` path contains the string `{{ns}}`, then it will instead dump each namespace to its own file, replacing `{{ns}}` with the namespace's name. This allows you to `@include` these files individually, which can be nice if you have a lot of them, e.g.
+
+```css
+@import colors
+@import colors/prompts
+@import animation/prompts
+```
+
+### As a Grunt plugin
+
+All options are the same as those for the command-line. At the very least, you should specify paths for `jsOut` and `cssOut`.
+
+For example:
+```js
+module.exports = function(grunt) {
+  grunt.initConfig({
+    ...
+    rosetta: {
+      default: {
+        src: ['rosetta/**/*.rose'],
+        options: {
+          jsFormat: 'requirejs',
+          cssFormat: 'less',
+          jsOut: 'lib/rosetta.js',
+          cssOut: 'less/rosetta/{{ns}}.less',
+        }
+      }
+    }
+  });
+  ...
+  grunt.loadNpmTasks('rosetta');
+};
+```
 
 ### Javascript API
 
@@ -231,6 +259,7 @@ rosetta.writeFiles([{path, text}], callback(err));
 ```
 `writeFiles` will actually write all of the compiled files to disk, creating directories as necessary.
 
-### As a Grunt plugin
+## License
 
-(coming soon)
+Licensed under the MIT license.
+http://github.com/7sempra/rosetta/blob/master/LICENSE-MIT

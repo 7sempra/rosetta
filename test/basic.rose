@@ -1,0 +1,26 @@
+$bareInt = 34
+$bareFloat = 0.234
+$pxNum = 47px
+$percNum = 47%
+$colorHash = #123abc
+$colorRgb = rgb(234, 123, 231)
+$colorRgba = rgba(44, 22, 77, 0.23);
+$str = 'foo'
+$url = url('google.com');
+$ident = no-wrap
+
+ns1:
+  $foo = 47
+  $bar = $foo
+  $baz = $bareInt
+
+ns2:
+  $foo = 48
+  $bar = ns1.$foo
+
+  nested:
+    $foo = 49
+    $bar = ns2.nested.$foo
+
+    nested2:
+      $foo = $bar

@@ -15,6 +15,7 @@ var knownOpts = {
   'jsTemplate': String,
   'cssTemplate': String,
   'version': Boolean,
+  'debug': Boolean,
   'help': Boolean
 };
 
@@ -73,7 +74,6 @@ rosetta.compile(_.keys(sources), opts, function(err, files) {
       if (err) {
         throw err;  // TODO: what to do here
       }
-      console.log('Done!');
     });
   }
 });
