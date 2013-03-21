@@ -182,7 +182,7 @@ Options:
                    an Underscore.js template, and must specify slots for
                    variables named 'k' (the name of the variable) and 'v' (the
                    value of the variable). For example:
-                   '$<%= k %>: <%= v %>;''
+                   '$<%= k %>: <%= v %>;'
 
   --version, -v    Print the current version to stdout.
 
