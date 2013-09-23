@@ -68,11 +68,11 @@ for (var a = 0; a < globs.length; a++) {
 
 rosetta.compile(_.keys(sources), opts, function(err, files) {
   if (err) {
-    console.log(err); // TODO: what to do here
+    die(rosetta.formatError(err));
   } else {
     rosetta.writeFiles(files, function(err) {
       if (err) {
-        throw err;  // TODO: what to do here
+        throw err;
       }
     });
   }
@@ -84,11 +84,7 @@ function printUsage() {
     .on('close', function () { process.exit(1) });
 }
 
-function message(str) {
-  process.stdout.write(str + '\n');
-}
-
 function die(str) {
-  message(str);
+  console.error(str);
   process.exit(1);
 }

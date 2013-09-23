@@ -16,18 +16,18 @@ module.exports = function(grunt) {
 
     rosetta.compile(sources, options, function(err, outfiles) {
       if (err) {
-        grunt.log.error(err);
+        var errStr = rosetta.formatError(err);
+        grunt.fatal(errStr);
         done(false);
       } else {
         rosetta.writeFiles(outfiles, function(err) {
           if (err) {
-            grunt.log.error(err);
+            grunt.fatal(err);
             done(false);
           } else {
             var cwd = process.cwd();
             outfiles.forEach(function(ouf) {
-              grunt.log.writeln('File ' + path.relative(cwd, ouf.path) +
-                  ' written');
+              grunt.log.ok('File ' + path.relative(cwd, ouf.path) + ' written');
             });
             done();
           }

@@ -237,10 +237,13 @@ rosetta.compile(['foo.rose', 'bar.rose'], {
   jsOut: 'lib/rosetta.js',
   cssOut: 'less/rosetta.less'
 }, function(err, outfiles) {
-  if (err) throw err;
-  rosetta.writeFiles(outfiles, function(err) {
-    if (err) throw err;
-    console.log('Done!');
+  if (err) {
+    console.error(rosetta.formatError(err));
+  } else {
+    rosetta.writeFiles(outfiles, function(err) {
+      if (err) throw err;
+      console.log('Done!');
+    }
   }
 });
 ```
@@ -258,6 +261,11 @@ rosetta.compile(sources, options, callback(err, outfiles));
 rosetta.writeFiles([{path, text}], callback(err));
 ```
 `writeFiles` will actually write all of the compiled files to disk, creating directories as necessary.
+
+```js
+rosetta.formatError(e)
+```
+Converts a Rosetta error object into human-readable error string, including a snipper of the code that generated the error. Most useful when printing errors from `rosetta.compile`.
 
 ## License
 
