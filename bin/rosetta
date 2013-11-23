@@ -66,17 +66,17 @@ for (var a = 0; a < globs.length; a++) {
   }
 }
 
-rosetta.compile(_.keys(sources), opts, function(err, files) {
-  if (err) {
-    die(rosetta.formatError(err));
+try {
+  rosetta.writeFiles(rosetta.compile(_.keys(sources), opts));
+} catch (e) {
+  if (e instanceof rosetta.RosettaError) {
+    die(rosetta.formatError(e));
   } else {
-    rosetta.writeFiles(files, function(err) {
-      if (err) {
-        throw err;
-      }
-    });
+    throw e;
   }
-});
+}
+
+
 
 function printUsage() {
   fs.createReadStream(__dirname + '/usage.txt')
