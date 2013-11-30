@@ -1,6 +1,6 @@
 # Rosetta
 
-**NOTE**: The JS API has changed in v0.3, see "Javascript API", below.
+**The JS API has changed to a synchronous model in v0.3; see "Javascript API", below.**
 
 Rosetta is a CSS *pre-* preprocessor that allows you to share variables between your Javascript code and a CSS preprocessor such as [Stylus](http://learnboost.github.com/stylus/), [Sass](http://sass-lang.com/), or [LESS](http://lesscss.org/).
 
@@ -238,23 +238,6 @@ module.exports = function(grunt) {
 
 Example:
 ```js
-rosetta.compile(['foo.rose', 'bar.rose'], {
-  jsFormat: 'flat',
-  cssFormat: 'less',
-  jsOut: 'lib/rosetta.js',
-  cssOut: 'less/rosetta.less'
-}, function(err, outfiles) {
-  if (err) {
-    console.error(rosetta.formatError(err));
-  } else {
-    rosetta.writeFiles(outfiles, function(err) {
-      if (err) throw err;
-      console.log('Done!');
-    }
-  }
-});
-
-
 try {
   var outfiles = rosetta.compile(['foo.rose', 'bar.rose'], {
     jsFormat: 'flat',
@@ -270,8 +253,6 @@ try {
     throw e;
   }
 }
-
-
 ```
 
 Rosetta exposes three functions:
@@ -279,7 +260,7 @@ Rosetta exposes three functions:
 ```js
 rosetta.compile(sources, options);
 ```
-...where `sources` is an array of paths and `options` is an hashmap of options (see below). Returns `outfiles`, which will be an array of `{path, text}` objects. You can pass this directly to `rosetta.writeFile()`.
+...where `sources` is an array of paths and `options` is an hashmap of options (see below). Returns `outfiles`, which will be an array of `{path, text}` objects. You can pass this directly to `rosetta.writeFiles()`.
 
 `options` are the same as those for the command-line API.
 
