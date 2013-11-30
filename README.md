@@ -1,5 +1,7 @@
 # Rosetta
 
+**NOTE**: The JS API has changed in v0.3, see "Javascript API", below.
+
 Rosetta is a CSS *pre-* preprocessor that allows you to share variables between your Javascript code and a CSS preprocessor such as [Stylus](http://learnboost.github.com/stylus/), [Sass](http://sass-lang.com/), or [LESS](http://lesscss.org/).
 
 It works like this:
@@ -11,7 +13,7 @@ Rosetta supports the following export formats:
 * **Javascript:** CommonJS module, RequireJS module, or flat JS file.
 * **CSS:** Stylus, Sass/Scss, or LESS syntax.
 
-Rosetta's export system is easily extensible; it is straightforward to add new export formats as desired.
+You can also add your own export formats; see the command-line documentation for more information.
 
 ## Example
 
@@ -136,9 +138,14 @@ All your variables will be exported to the format you specified, e.g.
 @highlight: #2211CC // Sass format
 ```
 
-However, all variables declared inside of a namespace will also be exported with a fully-qualified name:
+In addition, all variables declared inside of a namespace will also be exported with a fully-qualified name:
+
 ```
-// defined in colors.dialog.$highlight
+colors.dialog:
+  $highlight = #2211CC
+```
+...becomes...
+```
 @highlight: #2211CC
 @colors-dialog-highlight: #2211CC
 ```
@@ -246,19 +253,38 @@ rosetta.compile(['foo.rose', 'bar.rose'], {
     }
   }
 });
+
+
+try {
+  var outfiles = rosetta.compile(['foo.rose', 'bar.rose'], {
+    jsFormat: 'flat',
+    cssFormat: 'less',
+    jsOut: 'lib/rosetta.js',
+    cssOut: 'less/rosetta.less'
+  });
+  rosetta.writeFiles(outfiles);
+} catch (e) {
+  if (e instanceof rosetta.RosettaError) {
+    console.error(rosetta.formatError(e));
+  } else {
+    throw e;
+  }
+}
+
+
 ```
 
-Rosetta exposes two functions: `compile` and `writeFiles`:
+Rosetta exposes three functions:
 
 ```js
-rosetta.compile(sources, options, callback(err, outfiles));
+rosetta.compile(sources, options);
 ```
-...where `sources` is an array of paths and `options` is an hashmap of options (see below). `outfiles` will be an array of `{path, text}` objects, which you can pass directly to `rosetta.writeFile()`.
+...where `sources` is an array of paths and `options` is an hashmap of options (see below). Returns `outfiles`, which will be an array of `{path, text}` objects. You can pass this directly to `rosetta.writeFile()`.
 
 `options` are the same as those for the command-line API.
 
 ```js
-rosetta.writeFiles([{path, text}], callback(err));
+rosetta.writeFiles([{path, text}]);
 ```
 `writeFiles` will actually write all of the compiled files to disk, creating directories as necessary.
 

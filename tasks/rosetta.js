@@ -12,28 +12,21 @@ module.exports = function(grunt) {
         grunt.util._.pluck(this.files, 'src'));
 
     var options = this.options();
-    var done = this.async();
 
-    rosetta.compile(sources, options, function(err, outfiles) {
-      if (err) {
-        var errStr = rosetta.formatError(err);
-        grunt.fatal(errStr);
-        done(false);
+    try {
+      var outfiles = rosetta.compile(sources, options);
+      rosetta.writeFiles(outfiles);
+      var cwd = process.cwd();
+      outfiles.forEach(function(ouf) {
+        grunt.log.ok('File ' + path.relative(cwd, ouf.path) + ' written');
+      });
+    } catch (e) {
+      if (e instanceof rosetta.RosettaError) {
+        grint.fatal(rosetta.formatError(e));
       } else {
-        rosetta.writeFiles(outfiles, function(err) {
-          if (err) {
-            grunt.fatal(err);
-            done(false);
-          } else {
-            var cwd = process.cwd();
-            outfiles.forEach(function(ouf) {
-              grunt.log.ok('File ' + path.relative(cwd, ouf.path) + ' written');
-            });
-            done();
-          }
-        });
+        throw e;
       }
-    });
+    }
 
   });
 
